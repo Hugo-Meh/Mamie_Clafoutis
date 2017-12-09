@@ -32,19 +32,21 @@ public class ProduitAction {
 				retour = LigneIngredientManager.insertLigneingredientProduit(ingredient.getId(), produitId,
 						ingredient.getQuantite());
 		}
-
+		service.ConnectionBDD.closeConnection();
 		return retour;
 	}
 
 	public static ArrayList<Produit> displayAll() {
-
-		return ProduitManager.getAll();
+		ArrayList<Produit> retour = ProduitManager.getAll();
+		service.ConnectionBDD.closeConnection();
+		return retour;
 
 	}
 
 	public static ArrayList<Produit> displayByCategorie(int id) {
-
-		return ProduitManager.getByCategorie(id);
+		ArrayList<Produit> retour = ProduitManager.getByCategorie(id);
+		service.ConnectionBDD.closeConnection();
+		return retour;
 
 	}
 
@@ -54,6 +56,7 @@ public class ProduitAction {
 		produit.setIngredientList(IngredientManager.getByIdProduit(idP));
 		produit.setPatte(PattesManager.getByIdProduit(idP));
 		produit.setImageList(ImageManager.getByIdproduit(idP));
+		service.ConnectionBDD.closeConnection();
 		return produit;
 	}
 
@@ -64,6 +67,8 @@ public class ProduitAction {
 	}
 
 	static public ArrayList<Produit> displayInvisibleProduit() {
-		return ProduitManager.getProduitCache();
+		ArrayList<Produit> retour = ProduitManager.getProduitCache();
+		service.ConnectionBDD.closeConnection();
+		return retour;
 	}
 }

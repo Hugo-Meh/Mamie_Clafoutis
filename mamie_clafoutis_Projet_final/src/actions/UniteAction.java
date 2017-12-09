@@ -8,6 +8,7 @@ import manager.UniteManager;
 public class UniteAction {
 	
 	public static Unite getById(int id){
+		service.ConnectionBDD.closeConnection();
 		return UniteManager.getById(id);
 	}
 	

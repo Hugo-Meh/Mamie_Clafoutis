@@ -20,6 +20,7 @@ public class UtilisateurAction {
 			user.setRole(RoleManager.getById(user.getRole().getId()));
 
 		}
+		service.ConnectionBDD.closeConnection();
 		return user;
 	}
 	
@@ -32,12 +33,14 @@ public class UtilisateurAction {
 			user.setRole(RoleManager.getById(user.getRole().getId()));
 
 		}
+		service.ConnectionBDD.closeConnection();
 		return user;
 	}
 
 	public static Utilisateur getUserByUserName(String userName) {
 		Utilisateur user = null;
 		user = UtilisateurManager.getByUserName(userName);
+		service.ConnectionBDD.closeConnection();
 		return user;
 	}
 
@@ -50,6 +53,7 @@ public class UtilisateurAction {
 			newUser.changeTokenInscription();
 			idgenerated = UtilisateurManager.InsertUser(newUser);
 		}
+		service.ConnectionBDD.closeConnection();
 		return idgenerated;
 
 	}
@@ -60,6 +64,7 @@ public class UtilisateurAction {
 		if (userbyUserName != null) {
 			keyUserUpdate = UtilisateurManager.Update(user);
 		}
+		service.ConnectionBDD.closeConnection();
 		return keyUserUpdate;
 	}
 
@@ -73,6 +78,7 @@ public class UtilisateurAction {
 			user.setEtablissement(EtablissementAction.getById(user.getEtablissement().getId()));
 			user.setRole(RoleManager.getById(user.getRole().getId()));
 		}
+		service.ConnectionBDD.closeConnection();
 		return user;
 	}
 	
@@ -95,7 +101,7 @@ public class UtilisateurAction {
 		int idEtablissement = etablissement.getId();
 		retour.add(UtilisateurManager.getGerantByIdEtab(idEtablissement));
 		retour.add(UtilisateurManager.getChefBoulangerByIdEtab(idEtablissement));
-		
+		service.ConnectionBDD.closeConnection();
 		return retour;
 	}
 
@@ -105,6 +111,7 @@ public class UtilisateurAction {
 		if(utilisateur!=null){
 			retour= UtilisateurManager.UpdatePassword(user, password);
 		}
+		service.ConnectionBDD.closeConnection();
 		return retour;
 	}
 }

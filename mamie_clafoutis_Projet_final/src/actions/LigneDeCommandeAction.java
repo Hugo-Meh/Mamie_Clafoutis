@@ -10,16 +10,22 @@ import manager.LigneDeCommandeManager;
 public class LigneDeCommandeAction {
 	
 	public static int ajouterLignes(ArrayList<LigneDeCommande> lignedecommandeList){
-		return LigneDeCommandeManager.InsertLigneDeCommande(lignedecommandeList);
+		int retour = LigneDeCommandeManager.InsertLigneDeCommande(lignedecommandeList);
+		service.ConnectionBDD.closeConnection();
+		return retour;
 	}
 	
 	public static ArrayList<LigneDeCommande> convertCommande (ArrayList<Produit> produitList, Commande commande){
-		return LigneDeCommandeManager.ConversionLigneDeCommande(produitList, commande);
+		ArrayList<LigneDeCommande> retour =  LigneDeCommandeManager.ConversionLigneDeCommande(produitList, commande);
+		service.ConnectionBDD.closeConnection();
+		return retour;
+	
 	}
 	
 	public static ArrayList<LigneDeCommande>displayAllbyCommandeId(Commande commande){
 		ArrayList<LigneDeCommande> retour = new ArrayList<LigneDeCommande>();
 		retour.addAll(LigneDeCommandeManager.getAllByCommandeId(commande));
+		service.ConnectionBDD.closeConnection();
 		return retour;
 	}
 	

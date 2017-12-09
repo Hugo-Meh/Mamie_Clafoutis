@@ -16,9 +16,9 @@ public class EtablissementAction {
 			etablissement.setTypeEtablissement(
 					Type_Etablissement_Action.getById(etablissement.getTypeEtablissement().getId()));
 			etablissement.setAdresse(AdresseAction.getById(etablissement.getAdresse().getId()));
-
+			
 		}
-		
+		ConnectionBDD.closeConnection();
 		return etablissement;
 
 	}
@@ -46,6 +46,7 @@ public class EtablissementAction {
 				generatedKey = EtablissementManager.insert(etab);
 			}
 		}
+		service.ConnectionBDD.closeConnection();
 		return generatedKey;
 	}
 
@@ -54,6 +55,7 @@ public class EtablissementAction {
 		if (etab != null) {
 			generatedKey = EtablissementManager.update(etab);
 		}
+		service.ConnectionBDD.closeConnection();
 		return generatedKey;
 
 	}
@@ -63,7 +65,7 @@ public class EtablissementAction {
 		int generatedKey = -2;
 
 		generatedKey = EtablissementManager.toggleVisibility(switcher, idEtab);
-
+		service.ConnectionBDD.closeConnection();
 		return generatedKey;
 
 	}

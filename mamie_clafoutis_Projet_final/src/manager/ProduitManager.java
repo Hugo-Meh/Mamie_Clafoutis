@@ -4,14 +4,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import actions.UniteAction;
 import entities.Categorie;
 import entities.Produit;
-
 import service.C;
 import service.ConnectionBDD;
-
 public class ProduitManager {
 
 	static private String queryGetAll = "select * from " + C.Produit.nomTable + " where " + C.Produit.estvisible
@@ -78,7 +74,7 @@ public class ProduitManager {
 					retour.setEstVisible(rs.getBoolean(C.Produit.estvisible));
 					retour.setReference(rs.getString(C.Produit.reference));
 					retour.setPoid(rs.getFloat(C.Produit.poid));
-					retour.setUnite(UniteAction.getById(rs.getInt(C.Produit.unite_id)));
+					retour.setUnite(UniteManager.getById(rs.getInt(C.Produit.unite_id)));
 					retour.setIngredientList(IngredientManager.getByIdProduit(retour.getId()));
 					retour.setPatte(PattesManager.getByIdProduit(retour.getId()));
 				}
@@ -115,7 +111,7 @@ public class ProduitManager {
 					produit.setEstVisible(rs.getBoolean(C.Produit.estvisible));
 					produit.setReference(rs.getString(C.Produit.reference));
 					produit.setPoid(rs.getFloat(C.Produit.poid));
-					produit.setUnite(UniteAction.getById(rs.getInt(C.Produit.unite_id)));
+					produit.setUnite(UniteManager.getById(rs.getInt(C.Produit.unite_id)));
 
 					retour.add(produit);
 				}

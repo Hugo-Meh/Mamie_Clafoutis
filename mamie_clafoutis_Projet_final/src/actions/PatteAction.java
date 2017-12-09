@@ -17,6 +17,7 @@ public class PatteAction {
 	public static ArrayList<Patte> displayAll() {
 		ArrayList<Patte> patteList = null;
 		patteList = PattesManager.getAll();
+		service.ConnectionBDD.closeConnection();
 		return patteList;
 	}
 
@@ -31,7 +32,10 @@ public class PatteAction {
 				pate.setPoid(pp.getPoid() * produit.getQuantite());
 				pattes.add(pate);
 			}
+			
 		}
+		service.ConnectionBDD.closeConnection();
+
 		return pattes;
 	}
 
@@ -56,5 +60,6 @@ public class PatteAction {
 					
 			}
 		}
+		service.ConnectionBDD.closeConnection();
 	}
 }

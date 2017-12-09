@@ -15,7 +15,6 @@ import actions.CategorieAction;
 import entities.Categorie;
 import entities.Parametre;
 import entities.ParametresProduit;
-import entities.Produit;
 import manager.UtilisateurManager;
 import service.C;
 import utils.Utils;

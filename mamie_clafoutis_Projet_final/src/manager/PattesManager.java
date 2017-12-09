@@ -4,8 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import actions.UniteAction;
 import entities.Patte;
 import service.ConnectionBDD;
 
@@ -27,7 +25,7 @@ public class PattesManager {
 					patte.setId(rs.getInt("id"));
 					patte.setNom(rs.getString("nom"));
 					patte.setIngredientList(IngredientManager.getByIdPatte(patte.getId()));
-					patte.setUnite(UniteAction.getById(rs.getInt("unite_id")));
+					patte.setUnite(UniteManager.getById(rs.getInt("unite_id")));
 					patteList.add(patte);
 				}
 			}
@@ -50,7 +48,7 @@ public class PattesManager {
 					patte= new Patte();
 					patte.setId(rs.getInt("id"));
 					patte.setNom(rs.getString("nom"));
-					patte.setUnite(UniteAction.getById(rs.getInt("unite_id")));
+					patte.setUnite(UniteManager.getById(rs.getInt("unite_id")));
 					//patte.setPoid(rs.getFloat("poid"));
 					patte.setIngredientList(IngredientManager.getByIdPatte(patte.getId()));
 				}
@@ -74,7 +72,7 @@ Patte patte=null;
 					patte= new Patte();
 					patte.setId(rs.getInt("id"));
 					patte.setNom(rs.getString("nom"));
-					patte.setUnite(UniteAction.getById(rs.getInt("unite_id")));
+					patte.setUnite(UniteManager.getById(rs.getInt("unite_id")));
 					//patte.setPoid(rs.getFloat("poid"));
 					patte.setIngredientList(IngredientManager.getByIdPatte(patte.getId()));
 				}

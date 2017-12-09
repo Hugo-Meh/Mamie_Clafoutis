@@ -60,8 +60,6 @@ public class EtablissementManager {
 					etablissement.setTypeEtablissement(new Type_Etablissement(rs.getInt("type_id")));
 					etablissement.setAdresse(new Adresse(rs.getInt("Adresse_id")));
 					etablissement.setVisible(rs.getBoolean("isVisible"));
-					System.out.println("typ ->" + etablissement.getTypeEtablissement().getId());
-					System.out.println("adresse ->" + etablissement.getAdresse().getId());
 					etabList.add(etablissement);
 				}
 			}
