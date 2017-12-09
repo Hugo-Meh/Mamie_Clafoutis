@@ -1,0 +1,230 @@
+/**
+ * 
+ */
+document.addEventListener('DOMContentLoaded', function() {
+	console.log('DOM contruit');
+	console.log('user');
+
+	
+	var ajout = document.getElementById("btn-ajout-prod");
+	var addingred = document.getElementById("btn-add-prod");
+	var btn_deleteingred = document.getElementsByClassName("btn-delete-prod");
+	var dataURL;
+	
+
+	ajout.addEventListener("click", ajouter);
+	
+	for (var i=0; i<btn_deleteingred.length; i++) {
+		btn_deleteingred[i].addEventListener("click", deleteingred);
+		}
+	
+	
+	addingred.addEventListener("click", ajouteringred);
+
+	
+	
+});
+
+function deleteingred(event) {
+	 // alert(this.id);
+	event.preventDefault();
+	console.log(this);
+	 
+	var li = this.parentElement;
+	console.log(li);
+	
+	var liingred = document.getElementsByClassName("liingred");
+	console.log(liingred);
+	if(liingred.length > 1){
+		li.remove();
+	}
+
+
+	}
+
+function ajouteringred(event) {
+	console.log("function add ingred");
+	event.preventDefault();
+
+	var listIngredient = document.getElementsByClassName("liingred");
+	var ul = document.getElementById("listajout");
+	var tabingredient = [];
+	var ParametresProduit = new Object(); 
+	
+	console.log(listIngredient[0].children[1]);
+	var test;
+	for(var i = 0 ; i < listIngredient.length; i++){
+		tabingredient[i] = listIngredient[i].children[1].value;
+		if(listIngredient[i].children[1].value==-1){
+			test=-3;
+		}
+	}
+	console.log("testretour" + test);
+if(test!=-3){
+	// test
+	
+	ParametresProduit.url = "urlIngredient";
+	ParametresProduit.ingredientId = tabingredient;
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "gestionP", true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+	
+
+	var param = JSON.stringify(ParametresProduit);
+
+	console.log(param);
+
+	xhr.send(param);
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var jsonString = xhr.responseText;
+			var objectIngredient = JSON.parse(jsonString);
+	
+			var valeuringred = document.getElementsByClassName("liste-deroulante-ingred");
+			
+					var html = "";
+					var ingredid = 0;
+					
+					html+="<li class='liingred'>"+
+					"<button class='bouton-plus-moins btn-delete-prod'>x</button>" +
+							"<select name='ingredient' class='liste-deroulante-ingred' id='ingred-select'>"+
+						"<option value='-1'></option>";
+						for(var ingredient of objectIngredient){
+							html+="<option  value='"+ ingredient.id +"'>"+ingredient.denomination + "(" + ingredient.unite.denomination + ")</option>" ;
+						}
+						
+								
+						
+						
+						html+="</select>"+
+						"<label>Quantité</label><input type='text' name='poids' class='input-qte'></li>";
+						
+						
+						// ul.append(html);
+						$(html).insertBefore("#libtnadd");
+					
+					
+				
+				
+			}
+			
+		var btn_deleteingred = document.getElementsByClassName("btn-delete-prod");
+		for (var i=0; i<btn_deleteingred.length; i++) {
+			btn_deleteingred[i].addEventListener("click", deleteingred);
+			}
+			
+		
+	}
+}
+}
+
+function ajouter(event) {
+	console.log("fonction ajouter");
+	event.preventDefault();
+
+	var nom = document.getElementById("nom-prod");
+	var desc = document.getElementById("desc-prod");
+	var categorie = document.getElementById("categ-select");
+	var photo = document.getElementById("input-photo");
+	var pate = document.getElementById("pate-select");
+	
+	var ingred = document.getElementsByClassName("liste-deroulante-ingred");
+	console.log(ingred);
+	var tabingred = [];
+	var imageListTab =[];
+	var image= {};
+	image.formtWeb=dataURL;
+	imageListTab[0]=image;
+	
+	
+	var qte = document.getElementById("qte-prod");
+	var qte2 = document.getElementsByClassName("input-qte");
+	var photo = document.getElementById("input-photo");
+	var unite = document.getElementById("unite-select");
+	var prix = document.getElementById("prix-prod");
+	var qteunite = document.getElementById("qte-unite");
+
+ 
+    
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "gestionP", true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	
+	var Produit = new Object();
+	var ParametresProduit = new Object();
+	var categorieObj = new Object();
+	var patteObj = new Object();
+	
+	
+	var uniteObj = new Object();
+	var imageObj = new Object();
+	
+	categorieObj.id = categorie.value;
+	patteObj.id = pate.value;
+	
+	patteObj.poid = qte.value;
+	
+	
+	for(var i = 0; i< ingred.length; i++){
+		
+		
+		if(ingred[i].value != -1){
+			var ingredObj = new Object();
+			ingredObj.id = ingred[i].value;
+			ingredObj.quantite = qte2[i].value;
+			tabingred[i] = ingredObj;
+			
+		}
+		console.log(ingred[i].value);
+	}
+	
+	
+	
+	uniteObj.id = unite.value;
+	imageObj.src_img_norm = photo.value;
+
+	Produit.nom = nom.value;
+	Produit.description = desc.value;
+	Produit.prix = prix.value;
+	Produit.categorie = categorieObj;
+	Produit.patte = patteObj;
+	Produit.ingredientList = tabingred;
+	Produit.unite = uniteObj;
+	Produit.poid = qteunite.value;
+	Produit.imageList=imageListTab;
+
+	console.log(Produit);
+
+	ParametresProduit.url = "addproduit";
+	ParametresProduit.produitJsonType = Produit;
+
+	var param = JSON.stringify(ParametresProduit);
+
+	console.log(param);
+
+	xhr.send(param);
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var jsonString = xhr.responseText;
+			console.log(jsonString);
+			var objectProduit = JSON.parse(jsonString);
+			console.log("test" + objectProduit);
+
+		}
+	}
+
+}
+var openFile = function(event) {
+    var input = event.target;
+
+    var reader = new FileReader();
+    reader.onload = function(){
+      dataURL = reader.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  };
+

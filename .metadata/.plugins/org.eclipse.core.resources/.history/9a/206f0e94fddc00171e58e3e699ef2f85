@@ -1,0 +1,24 @@
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import com.google.gson.Gson;
+
+import actions.CommandeAction;
+import entities.Commande;
+
+public class testMain {
+
+	public static void main(String[] args) {
+		Gson gson = new Gson();
+		ArrayList<Commande>cl=CommandeAction.displayByIdEtab(8);
+		for(Commande c:cl){
+			
+			String newstring = new SimpleDateFormat("yyyy-MM-dd").format(c.getDate());
+			System.out.println(newstring);
+			
+		}
+	}
+}

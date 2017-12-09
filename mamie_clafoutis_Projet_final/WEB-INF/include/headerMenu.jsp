@@ -1,0 +1,184 @@
+
+<%@page import="manager.TypeEtablissementManager"%>
+<%@page import="manager.SessionManager"%>
+<%@page import="service.C"%>
+<%@page import="entities.Utilisateur"%>
+<%@page import="entities.Type_Etablissement"%>
+
+<%
+	Utilisateur user = (Utilisateur) SessionManager.getSessionValue(C.Utilisateur.sessionUserConnect, request);
+%>
+
+<header>
+	<div class="container-inverse Header_Nav_Container">
+		<nav class="navbar navbar-inverse Header_Nav_Menu " role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-navbar-navbar-collapse-1">
+				<%
+					/*----------------Connection de ladmin------------------*/
+					if ((user != null) && (user.getRole().getId() == 1)) {
+				%>
+				<div class="navbar-header">
+					<a class="navbar-brand  Google_Link" href="accueil"
+						title="Retour vers la page d'accueil">Accueil</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="">Gestion Commandes</a></li>
+					<li><a href="gestionEtablissement?action=urlDisplayEtab">Gestion
+							�tablissements</a></li>
+					<li><a href="gestionP?action=displayproduit">Gestion
+							Produits</a></li>
+					<li><a href="gestionEmploye?action=display">Gestion
+							Utilisateurs</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="" class="signup_link" id="profil"><span
+							class="glyphicon glyphicon-user"></span></a></li>
+					<li><a href="logOut" class="login_link"><span
+							class="glyphicon glyphicon-log-out"></span></a></li>
+				</ul>
+				<%
+					}
+				%>
+				<%
+					/*----------------Connection de Chef boulanger Admin------------------*/
+					if ((user != null) && (user.getRole().getId() == 2) && (user.getEtablissement().getTypeEtablissement().getId() == 1)) {
+				%>
+				<div class="navbar-header">
+					<a class="navbar-brand  Google_Link" href="accueil"
+						title="Retour vers la page d'accueil">Accueil</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="">Gestion Commandes</a></li>
+					<li><a href="gestionP?action=displayproduit">Gestion Produits</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="" class="signup_link" id="profil"><span
+							class="glyphicon glyphicon-user"></span></a></li>
+					<li><a href="logOut" class="login_link"><span
+							class="glyphicon glyphicon-log-out"></span></a></li>
+				</ul>
+				<%
+					}
+				%>
+				<%
+					/*----------------Connection de Chef boulanger Corporate ET cuisinier------------------*/
+					if ((user != null) && (user.getRole().getId() == 2) && (user.getEtablissement().getTypeEtablissement().getId() == 2)
+							|| (user != null) && (user.getRole().getId() == 4) && (user.getEtablissement().getTypeEtablissement().getId() == 2)) {
+				%>
+				<div class="navbar-header">
+					<a class="navbar-brand  Google_Link" href="accueil"
+						title="Retour vers la page d'accueil">Accueil</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="gestionP?action=displayproduit">Produit</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="" class="signup_link" id="profil"><span
+							class="glyphicon glyphicon-user"></span></a></li>
+					<li><a href="logOut" class="login_link"><span
+							class="glyphicon glyphicon-log-out"></span></a></li>
+				</ul>
+				<%
+					}
+				%>
+				<%
+					/*----------------Connection de Gerant Corporate et Fanchise------------------*/
+					if ((user != null) && (user.getRole().getId() == 3) && (user.getEtablissement().getTypeEtablissement().getId() == 3)
+							|| (user != null) && (user.getRole().getId() == 3) && (user.getEtablissement().getTypeEtablissement().getId()== 2)) {
+				%>
+
+				<div class="navbar-header">
+					<a class="navbar-brand  Google_Link" href="accueil"
+						title="Retour vers la page d'accueil">Accueil</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="gestionP?action=displayproduit">Produits</a></li>
+					<li><a href="gestionEmploye?action=display">Gestion Utilisateurs</a></li>
+					<li><a href="gestioncommande?action=panier">Panier</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="" class="signup_link" id="profil"><span
+							class="glyphicon glyphicon-user"></span></a></li>
+				<li><a href="gestioncommande?action=panier" class="login_link"><span
+					class="glyphicon glyphicon-shopping-cart"></span></a></li>
+					
+					<li><a href="logOut" class="login_link"><span
+							class="glyphicon glyphicon-log-out"></span></a></li>
+				</ul>
+				<%
+					}
+				%>
+				<%
+					/*----------------Connection de Chef boulanger Franchise et cuisiner Franchise------------------*/
+					if ((user != null) && (user.getRole().getId() == 2) && (user.getEtablissement().getTypeEtablissement().getId() == 3)
+							|| (user != null) && (user.getRole().getId() == 4) && (user.getEtablissement().getTypeEtablissement().getId() == 3)) {
+				%>
+				<div class="navbar-header">
+					<a class="navbar-brand  Google_Link" href="accueil"
+						title="Retour vers la page d'accueil">Accueil</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="gestionP?action=displayproduit">Produit</a></li>
+					<li><a href="gestioncommande?action=panier">Panier</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="Inscription.html" class="signup_link" id="profil"><span
+							class="glyphicon glyphicon-user"></span></a></li>
+					<li><a href="gestioncommande?action=panier" class="login_link"><span
+							class="glyphicon glyphicon-shopping-cart"></span></a></li>
+					<li><a href="logOut" class="login_link"><span
+							class="glyphicon glyphicon-log-out"></span></a></li>
+				</ul>
+				<%
+					}
+				%>
+			</div>
+
+		</nav>
+	</div>
+	<div id="myModal" class="modal">
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h3 id="titreProfil">Votre Profil</h3>
+			<%
+				if (user != null) {
+			%>
+			<p>
+				Nom:
+				<%=user.getNom()%></p>
+			<p>
+				Prenom:
+				<%=user.getPrenom()%></p>
+			<p>
+				Etablissement:
+				<%=user.getEtablissement().getName()%></p>
+			<p>
+				Username:
+				<%=user.getUserName()%></p>
+			
+			<ul>
+				<li><label class="label-form">Votre Password</label><input
+					class="input-form" type="text" placeholder="votre password" id="mdp1"></li>
+				<li><label class="label-form">Nouveau Password</label> <input
+					class="input-form" type="text" placeholder="nouveau password" id="mdp2"></li>
+				<li><label class="label-form">Nouveau Password</label><input
+					class="input-form" type="text" placeholder="nouveau password" id="mdp3"></li>
+			</ul>
+
+			<input type="button" value="changer votre password"
+				class="bouton btn-submit btnpass" id="<%=user.getId()%>">
+<%
+				}
+			%>
+		</div>
+
+	</div>
+	
+	<script src="js/modal.js"></script>
+</header>
+

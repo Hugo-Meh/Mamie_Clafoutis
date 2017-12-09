@@ -1,0 +1,342 @@
+package manager;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import actions.EtablissementAction;
+import entities.Etablissement;
+import entities.Role;
+import entities.Utilisateur;
+import service.C;
+import service.ConnectionBDD;
+import utils.Utils;
+
+public class UtilisateurManager {
+	static private String queryByToken = "select * from "+C.Utilisateur.nomTable+" where "+C.Utilisateur.tokenIdentification+" =? and "+C.Utilisateur.isVisible+"=true";
+	static private String queryByUserName = "select * from "+C.Utilisateur.nomTable+" where "+C.Utilisateur.username+"=? and "+C.Utilisateur.isVisible+"=true";
+	static private String queryById = "select * from "+C.Utilisateur.nomTable+" where "+C.Utilisateur.id+"=? and "+C.Utilisateur.isVisible+"=true";
+	static private String queryConnect = "select * from "+C.Utilisateur.nomTable+" where "+C.Utilisateur.username+"=? and  "+C.Utilisateur.password+"=? and "+C.Utilisateur.isVisible+"=true";
+	static private String insertUser = "insert into "+C.Utilisateur.nomTable+" ("+C.Utilisateur.nom+", "+C.Utilisateur.prenom+", "+C.Utilisateur.etablissement_id+", "+C.Utilisateur.role_id+", "+C.Utilisateur.username+", "
+			+C.Utilisateur.password+", "+C.Utilisateur.tokenInscription+") values (?,?,?,?,?,?,?)";
+
+	static private String queryUpdate = "update "+C.Utilisateur.nomTable+" set "+C.Utilisateur.nom+"=?, "+C.Utilisateur.prenom+"=?, "+C.Utilisateur.etablissement_id+"=?, "+C.Utilisateur.role_id+"=?, "+C.Utilisateur.username+"=?, "
+			+ C.Utilisateur.password+"=?  where "+C.Utilisateur.id+"=?";
+	static private String queryDelete = "update "+C.Utilisateur.nomTable+" set "+C.Utilisateur.isVisible+"=false  where "+C.Utilisateur.id+"=?";
+
+	static private String queryUpdatetoken = "update "+C.Utilisateur.nomTable+" set "+C.Utilisateur.tokenIdentification+"=?  where "+C.Utilisateur.id+"=?";
+	static private String queryAll = "select * from "+C.Utilisateur.nomTable+" where "+C.Utilisateur.isVisible+"=true";
+	private static String queryByIdEtab = "select * from "+C.Utilisateur.nomTable+" where "+C.Utilisateur.etablissement_id+"=? and "+C.Utilisateur.isVisible+"=true";
+	//private static String queryGetGerantbyIdEtab = "select * from "+C.Utilisateur.nomTable+" where "+C.Utilisateur.etablissement_id+"=? and "+C.Utilisateur.isVisible+"=true and "+C.Utilisateur.role_id+"="+C.Role.idGerant;
+	//private static String queryGetChefBoulangerbyIdEtab = "select * from "+C.Utilisateur.nomTable+" where "+C.Utilisateur.etablissement_id+"=? and "+C.Utilisateur.isVisible+"=true and "+C.Utilisateur.role_id+"="+C.Role.idChefBoulanger;
+	
+
+	private static String queryUpdatePassword="update "+C.Utilisateur.nomTable+" set "+C.Utilisateur.password+"=?"+" where "+C.Utilisateur.id+"=?";
+
+	static public Utilisateur getByToken(String tokenIdentification) {
+		Utilisateur user = null;
+
+		try {
+			PreparedStatement ps = ConnectionBDD.getPs(queryByToken);
+			ps.setString(1, tokenIdentification);
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) {
+				if (rs.next()) {
+					user = new Utilisateur();
+					user.setId(rs.getInt("id"));
+					user.setNom(rs.getString("nom"));
+					user.setPrenom(rs.getString("prenom"));
+					user.setRole(new Role(rs.getInt("role_id")));
+					//user.setEtablissement(new Etablissement(rs.getInt("etablissement_id")));
+					user.setEtablissement(EtablissementManager.getById((rs.getInt("etablissement_id"))));
+					user.setVisible(rs.getBoolean("isVisible"));
+					user.setUserName(rs.getString("userName"));
+					user.setTokenIdentification(rs.getString("tokenIdentification"));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
+		return user;
+
+	}
+	
+	static public Utilisateur getById (int id) {
+		Utilisateur user = null;
+
+		try {
+			PreparedStatement ps = ConnectionBDD.getPs(queryById);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) {
+				if (rs.next()) {
+					user = new Utilisateur();
+					user.setId(rs.getInt("id"));
+					user.setNom(rs.getString("nom"));
+					user.setPrenom(rs.getString("prenom"));
+					user.setRole(new Role(rs.getInt("role_id")));
+					user.setEtablissement(EtablissementAction.getById(rs.getInt("etablissement_id")));
+					user.setVisible(rs.getBoolean("isVisible"));
+					user.setUserName(rs.getString("userName"));
+					user.setTokenIdentification(rs.getString("tokenIdentification"));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
+		return user;
+
+	}
+
+	static public Utilisateur getByUserName(String userName) {
+		Utilisateur user = null;
+
+		try {
+			PreparedStatement ps = ConnectionBDD.getPs(queryByUserName);
+			ps.setString(1, userName);
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) {
+				if (rs.next()) {
+					user = new Utilisateur();
+					user.setId(rs.getInt("id"));
+					user.setNom(rs.getString("nom"));
+					user.setPrenom(rs.getString("prenom"));
+					user.setRole(new Role(rs.getInt("role_id")));
+					user.setEtablissement(new Etablissement(rs.getInt("etablissement_id")));
+					user.setVisible(rs.getBoolean("isVisible"));
+					user.setUserName(rs.getString("userName"));
+					user.setTokenIdentification(rs.getString("tokenIdentification"));
+
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	public static int InsertUser(Utilisateur newUser) {
+		int idGenerated = -1;
+
+		try {
+			PreparedStatement ps = ConnectionBDD.getPs(insertUser);
+			ps.setString(1, newUser.getNom());
+			ps.setString(2, newUser.getPrenom());
+			ps.setInt(3, newUser.getEtablissement().getId());
+			ps.setInt(4, newUser.getRole().getId());
+			ps.setString(5, newUser.getUserName());
+			ps.setString(6, newUser.getPassword());
+			ps.setString(7, newUser.getTokenInscription());
+
+			if (ps.executeUpdate() > 0) {
+				ResultSet rs = ps.getGeneratedKeys();
+				if (rs.next())
+					idGenerated = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return idGenerated;
+	}
+
+	public static int Update(Utilisateur user) {
+		int idGenerated = -1;
+
+		try {
+
+			PreparedStatement ps = ConnectionBDD.getPs(queryUpdate);
+
+			ps.setString(1, user.getNom());
+			ps.setString(2, user.getPrenom());
+			ps.setInt(3, user.getEtablissement().getId());
+			ps.setInt(4, user.getRole().getId());
+			ps.setString(5, user.getUserName());
+			ps.setString(6, user.getPassword());
+			ps.setInt(7, user.getId());
+			idGenerated=ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return idGenerated;
+	}
+
+	public static int UpdateToken(Utilisateur user) {
+		int idGenerated = -1;
+
+		try {
+
+			PreparedStatement ps = ConnectionBDD.getPs(queryUpdatetoken);
+
+			ps.setString(1, user.getTokenIdentification());
+			ps.setInt(2, user.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return idGenerated;
+	}
+
+	static public Utilisateur getUserLogIn(Utilisateur utilsateur) {
+		Utilisateur user = null;
+
+		try {
+			PreparedStatement ps = ConnectionBDD.getPs(queryConnect);
+			ps.setString(1, utilsateur.getUserName());
+			ps.setString(2, utilsateur.getPassword());
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) {
+				if (rs.next()) {
+					user = new Utilisateur();
+					user.setId(rs.getInt("id"));
+					user.setNom(rs.getString("nom"));
+					user.setPrenom(rs.getString("prenom"));
+					user.setRole(new Role(rs.getInt("role_id")));
+					user.setEtablissement(new Etablissement(rs.getInt("etablissement_id")));
+					user.setVisible(rs.getBoolean("isVisible"));
+					user.setUserName(rs.getString("userName"));
+					user.setTokenIdentification(rs.getString("tokenIdentification"));
+
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	public static ArrayList<Utilisateur> getAll() {
+		ArrayList<Utilisateur> allUsers = null;
+		try {
+			PreparedStatement ps = ConnectionBDD.getPs(queryAll);
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) {
+				allUsers = new ArrayList<>();
+				while (rs.next()) {
+					Utilisateur user = new Utilisateur();
+					user.setId(rs.getInt("id"));
+					user.setNom(rs.getString("nom"));
+					user.setPrenom(rs.getString("prenom"));
+					user.setRole(new Role(rs.getInt("role_id")));
+					user.setEtablissement(EtablissementAction.getById(rs.getInt("etablissement_id")));
+					user.setVisible(rs.getBoolean("isVisible"));
+					user.setUserName(rs.getString("userName"));
+					allUsers.add(user);
+					
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return allUsers;
+
+	}
+
+	public static ArrayList<Utilisateur> getUserByIdEtab(int idEtab) {
+		ArrayList<Utilisateur> allUsers = null;
+		try {
+			PreparedStatement ps = ConnectionBDD.getPs(queryByIdEtab);
+			ps.setInt(1, idEtab);
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) {
+				allUsers = new ArrayList<>();
+				while (rs.next()) {
+					Utilisateur user = new Utilisateur();
+					user.setId(rs.getInt("id"));
+					user.setNom(rs.getString("nom"));
+					user.setPrenom(rs.getString("prenom"));
+					user.setRole(new Role(rs.getInt("role_id")));
+					user.setEtablissement(EtablissementAction.getById(rs.getInt("etablissement_id")));
+					System.out.println(rs.getInt("etablissement_id"));
+				//	user.setVisible(rs.getBoolean("isVisible"));
+					user.setUserName(rs.getString("userName"));
+					allUsers.add(user);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return allUsers;
+
+	}
+
+	public static int delete(Utilisateur user) {
+		int idGenerated = -1;
+
+		try {
+
+			PreparedStatement ps = ConnectionBDD.getPs(queryDelete);
+			ps.setInt(1, user.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
+		return idGenerated;
+	}
+
+	
+	public static Utilisateur getGerantByIdEtab(int idEtab){
+		Utilisateur retour = null;
+		
+		ArrayList<Utilisateur> utilisateurList = getUserByIdEtab(idEtab);
+		
+		for (Utilisateur utilisateur : utilisateurList){
+			if ( utilisateur.getRole().getId() == C.Role.idGerant){
+				retour = utilisateur;
+				break;
+			}
+		}
+		
+		return retour;
+	}
+	
+	public static Utilisateur getChefBoulangerByIdEtab(int idEtab){
+		Utilisateur retour = null;
+		
+		ArrayList<Utilisateur> utilisateurList = getUserByIdEtab(idEtab);
+		
+		for (Utilisateur utilisateur : utilisateurList){
+			if ( utilisateur.getRole().getId() == C.Role.idChefBoulanger){
+				retour = utilisateur;
+				break;
+			}
+		}
+		
+		return retour;
+	}
+
+	
+	public static int UpdatePassword(Utilisateur user,String password) {
+		int idGenerated = -1;
+			String hash= Utils.md5(password);
+		try {
+
+			PreparedStatement ps = ConnectionBDD.getPs(queryUpdatePassword);
+			ps.setString(1, hash);
+			ps.setInt(2, user.getId());
+			idGenerated=ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return idGenerated;
+	}
+
+}

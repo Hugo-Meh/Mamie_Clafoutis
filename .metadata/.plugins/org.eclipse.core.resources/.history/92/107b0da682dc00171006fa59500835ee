@@ -1,0 +1,23 @@
+package actions;
+
+import java.util.ArrayList;
+
+import entities.Commande;
+import entities.Utilisateur;
+import manager.CommandeManager;
+
+public class CommandeAction {
+	
+	public static int ajoutercommande (Commande commande){
+		return CommandeManager.InsertCommande(commande);
+	}
+	
+	public static ArrayList<Commande> displayCommandeByUtilisateur (Utilisateur utilisateur){
+		ArrayList<Commande> retour = new ArrayList<Commande>();
+		
+		retour = CommandeManager.GetAllPendingByUser(utilisateur);
+		
+		return retour;
+	}
+
+}

@@ -1,0 +1,130 @@
+<%@page import="entities.Categorie"%>
+<%@page import="entities.Produit"%>
+<%@page import="manager.SessionManager"%>
+<%@page import="service.C"%>
+
+<%@page import="entities.Utilisateur"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<%
+	ArrayList<Produit> allProduits = (ArrayList<Produit>) request.getAttribute(C.Produit.produitList);
+	ArrayList<Categorie> allCats = (ArrayList<Categorie>) request.getAttribute(C.Categorie.categorielist);
+%>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Test</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed"
+	rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="  css/styles.css">
+<link rel="stylesheet" type="text/css" href="style/styleHeaderMenu.css">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<%@ include file="include/headerMenu.jsp"%>
+
+	<img class="img-banner" alt="" src="images/gestion-prod-banner.jpg">
+	<h1 class="titre">Gestion Produits</h1>
+	<a href="gestionP?action=addproduit"><button class="bouton"
+			id="bouton-gestion-produit">Ajouter Produits</button></a>
+	<div class="container ">
+		<!-- =========================== PRODUITS PID #1========================   -->
+		<form action="Produits.jsp" method="post">
+			<table class="table table-bordered " id="table-gestion-produit">
+				<thead class="  bg-info">
+
+					<tr>
+						<!-- ROW #1 -->
+						<th><select name="categoriemenu" id="menucats">
+								<option value="allcats">Toutes les catégories</option>
+								<%
+									if (allCats != null) {
+								%>
+								<%
+									for (Categorie c : allCats) {
+								%>
+
+								<option value="<%=c.getId()%>"><%=c.getDenomination()%></option>
+								<%
+									}
+									}
+								%>
+								<option value="-1">Produits non disponibles</option>
+						</select></th>
+						<th>PRODUITS</th>
+						<th>PHOTO</th>
+						<th>DISPONIBILITÉ</th>
+					</tr>
+				</thead>
+				<div id="msgvide"></div>
+				<tbody id="tbodyprod">
+					<%
+						if (allProduits != null) {
+					%>
+					<%
+						for (Produit p : allProduits) {
+					%>
+					<tr id="tr<%=p.getId()%>">
+
+
+						<td><%=p.getCategorie().getDenomination()%></td>
+
+						<td><%=p.getNom()%></td>
+						<td>
+							<%
+								if (p.getImageList() != null) {
+							%> <%
+ 	if (p.getImageList().get(0).getSrc_img_norm() != null) {
+ %>
+							<img
+							src='images/photo/<%=p.getImageList().get(0).getSrc_img_norm()%>'
+							class="img_prod " /> <%
+ 	} else if (p.getImageList().get(0).getFormatWeb() != null) {
+ %>
+							<img src=<%=p.getImageList().get(0).getFormatWeb()%>
+							class="img_prod " /> <%
+ 	} else {
+ %> <img
+							src='images/mamieclafoutis_logo.png' class="img_prod " /> <%
+ 	}
+ %>
+							<%
+								}
+							%>
+						</td>
+						<td>
+							<button class="bouton btn_supp_prod" id="<%=p.getId()%>">Rendre
+								indisponible</button>
+
+						</td>
+
+					</tr>
+					<%
+						}
+						}
+					%>
+				</tbody>
+			</table>
+		</form>
+	</div>
+	<!-- ===========================END  PRODUITS PID #1 ========================   -->
+
+
+	<%@ include file="include/footer.jsp"%>
+
+	<script src="js/gestionprod.js"></script>
+
+</body>
+</html>

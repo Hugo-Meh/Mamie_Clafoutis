@@ -1,0 +1,68 @@
+package manager;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import entities.Produit;
+
+public class SessionManager {
+	public static void addSession(String key, HttpServletRequest request, Object object) {
+		HttpSession session = request.getSession();
+		session.setAttribute(key, object);
+
+	}
+
+	public static void addSessionInTable(String key, HttpServletRequest request, Produit produit) {
+		HttpSession session = request.getSession();
+		ArrayList<Produit> arrayProduit = (ArrayList<Produit>) session.getAttribute(key);
+		if (arrayProduit == null) {
+			arrayProduit = new ArrayList<>();
+			arrayProduit.add(produit);
+		}else {
+			int index=indexProduitExiste(arrayProduit, produit);
+			if(index==-1){
+				arrayProduit.add(produit);
+			}else{
+				arrayProduit.get(index).setQuantite(arrayProduit.get(index).getQuantite()+produit.getQuantite());
+			}
+		}
+		
+		session.setAttribute(key, arrayProduit);
+
+	}
+
+	public static Object getSessionValue(String key, HttpServletRequest request) {
+		Object object = null;
+		HttpSession session = request.getSession();
+		object = (Object) session.getAttribute(key);
+		return object;
+	}
+
+	public static ArrayList<Produit> getSessionTabValue(String key, HttpServletRequest request) {
+		ArrayList<Produit> allObject = null;
+		HttpSession session = request.getSession();
+		allObject = (ArrayList<Produit>) session.getAttribute(key);
+		return allObject;
+	}
+
+	public static void removeValue(String key, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute(key);
+	}
+	
+	private static int indexProduitExiste(ArrayList<Produit>listProduit,Produit produit){
+		int retour=-1;
+		int i=0;
+		boolean trouve=false;
+		while(i<listProduit.size()&& !trouve){
+			if(listProduit.get(i).getId()==produit.getId()){
+				trouve=true;
+				retour=i;
+			}
+			i++;
+		}
+		return retour;
+	}
+}

@@ -1,0 +1,633 @@
+@CHARSET "UTF-8";
+/*ASHLEYS_HEADER_NAVIGATION_MENU (RICH GRADIANT BACKGROUND-COLOR_MIX*/
+div.container-inverse.Header_Nav_Container {
+	position: fixed;
+	width: 100%;
+}
+
+a.navbar-brand.Facebook_Link {
+	color: #3d8aed;
+}
+
+/*===REMOVING Hover Shaddow Box in Nav Header (Home,About,Menu,Contact)=======*/
+ul.nav.navbar-nav.Header_nav a {
+	background: none;
+}
+
+ul.nav.navbar-nav.Header_nav a: hover {
+	background: none;
+}
+/*===END Hover Shaddow Box in Nav Header (Home,About,Menu,Contact)============*/
+
+/*============dropdown-menu (Home,About,Menu,Contact)=========================*/
+ul.nav.navbar-nav.cl-effect-1 a {
+	color: #ff6666;
+}
+/*============END dropdown-menu (Home,About,Menu,Contact)===================*/
+
+/*============dropdown-menu (Menu,Dessert,Drinks)=============================*/
+ul.dropdown-menu {
+	background-color: #f3d6d4;
+}
+/*==========END dropdown-menu (Menu,Dessert,Drinks)==========================*/
+
+/*============nav.navbar-right (SignUp & Login)===============================*/
+/*REMOVING HOVER SHADOW BOX*/
+ul.nav.navbar-nav.navbar-right a {
+	background: none;
+}
+
+ul.nav.navbar-nav.navbar-right a {
+	color: rgb(256, 172, 154);
+}
+/*============END nav.navbar-right (SignUp & Login)==========================*/
+
+/*css footer*/
+/*Mamie Clafoutis Bottom Footer */
+.copyright {
+	color: rgb(256, 172, 154);
+	line-height: 30px;
+	min-height: 30px;
+	padding: 7px 0;
+}
+
+.design {
+	color: #fff;
+	line-height: 30px;
+	min-height: 30px;
+	padding: 7px 0;
+	text-align: right;
+}
+
+.design a {
+	color: rgb(256, 172, 154);
+}
+
+.design a:hover {
+	color: rgb(256, 172, 154);
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+	border-color: #101010;
+}
+
+/* Top menu end   */
+.btn-circle.btn-xl {
+	width: 70px;
+	height: 100px;
+	padding: 10px 16px;
+	border-radius: 35px;
+	font-size: 24px;
+	line-height: 1.33;
+}
+
+.btn-circle {
+	width: 30px;
+	height: 30px;
+	padding: 6px 0px;
+	border-radius: 15px;
+	text-align: center;
+	font-size: 12px;
+	line-height: 1.42857;
+}
+
+th {
+	background-color: #F7F6F6;
+	width: 25%;
+}
+
+/*nav-pills Menu */
+ul.nav.nav-pills.nav-stacked.col-md-2.col-lg-2 {
+	/*   background-color: #c2a0a0;*/
+	background-color: #c2a0a06b;
+}
+
+ul.nav.nav-pills.nav-stacked.col-md-2.col-lg-2>li.active>a {
+	color: #fff;
+	background-color: #ca8750;
+}
+
+/*Page d'inscription*/
+div.container.Dsiplaycenter {
+	margin: auto;
+	width: 40%;
+	/*border: 3px solid green;*/
+	padding: 10px;
+}
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------*/
+* {
+	box-sizing: border-box;
+	list-style: none;
+	text-decoration: none !important;
+	/* 	font-family: 'Roboto Condensed', sans-serif;
+ */
+}
+
+.btn-submit {
+	margin: 0 auto 25px auto;
+	display: block;
+	width: 250px;
+}
+
+.btn-submit a {
+	color: white;
+}
+
+.btn-submit a:hover {
+	color: white;
+}
+
+.bouton {
+	border-radius: 20px;
+	background-color: rgb(256, 172, 154);
+	border: none;
+	height: 50px;
+	font-size: 16px;
+	color: white;
+}
+
+.input-form {
+	width: 200px;
+	border-radius: 10px;
+	border: 1px solid rgb(256, 172, 154);
+	border-radius: 10px;
+	background-color: white !important;
+	margin: 10px;
+}
+
+.label-form {
+	width: 150px;
+	margin: 15px 0 25px 0;
+}
+
+.select-form {
+	width: 150px;
+	border-radius: 10px;
+	border: 1px solid rgb(256, 172, 154);
+	border-radius: 10px;
+	background-color: white !important;
+	margin: 10px;
+}
+
+.allForm {
+	margin: 0 auto;
+	display: table;
+}
+
+.error_msg {
+	color: #C35555;
+}
+
+/*-----------ACCUEIL---------  */
+.navbar-inverse:hover {
+	color: #C35555 !important;
+}
+
+#titreAccueil {
+	text-align: center;
+}
+
+#page-acceuil-info {
+	margin: auto;
+}
+
+#page-acceuil-info {
+	margin-top: 100px;
+	margin-bottom: 170px;
+}
+
+.titre {
+	text-align: center;
+	margin: 40px;
+}
+
+.img_logo {
+	margin: 0 auto;
+	display: block;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+	color: rgb(256, 172, 154) !important;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover {
+	color: #C35555 !important;
+}
+
+/*---------PAGE PRODUITS----------*/
+.select-produit {
+	height: 30px;
+	margin: 20px auto;
+	display: block;
+	width: 13%;
+}
+
+.produit_unit {
+	border: 1px dotted #C35555;
+	width: 23%;
+	display: inline-block;
+	margin: 10px;
+}
+
+.img_prod2 {
+	width: 90%;
+	margin: 0 auto;
+	display: block;
+}
+
+.input-qty-panier {
+	width: 50px;
+}
+
+.div-qty-produit {
+	margin-left: 30%;
+}
+
+.prod-details {
+	text-align: center;
+}
+
+.btnPanier {
+	display: block;
+	margin: 10px auto;
+	width: 60%;
+}
+
+.btn_ajout_prod {
+	display: block;
+	margin: 10px auto;
+	width: 60%;
+}
+
+.btn_desc_prod {
+	display: block;
+	margin: 10px auto;
+	width: 60%;
+}
+/*----PAGE AJOUT PRODUIT-----  */
+.img-banner {
+	width: 100%;
+	margin-top: 50px;
+}
+
+#form-ajout-produit {
+	display: table;
+	margin: 50px auto;
+}
+
+.input-qte {
+	width: 50px;
+	border-radius: 10px;
+	border: 1px solid rgb(256, 172, 154);
+	border-radius: 10px;
+}
+
+select {
+	border-radius: 10px;
+	border: 1px solid rgb(256, 172, 154);
+}
+
+.bouton-plus-moins {
+	border-radius: 50px;
+	background-color: rgb(256, 172, 154);
+	border: none;
+	width: 35px;
+	height: 35px;
+	font-size: 16px;
+	color: white;
+}
+
+.bouton-plus-moins:hover {
+	background-color: rgba(256, 172, 154, 0.8);
+}
+
+#form-ajout-produit {
+	width: 35%;
+}
+
+.liste-deroulante {
+	width: 25%;
+}
+
+.bouton-ajout-prod {
+	width: 250px;
+	margin: 10px auto;
+	display: table;
+}
+
+.bouton:hover {
+	background-color: rgba(256, 172, 154, 0.8);
+}
+
+#input-photo {
+	display: inline-block;
+	width: 350px;
+}
+
+/*----GESTION PRODUIT------  */
+#bouton-gestion-produit {
+	display: block;
+	margin: 20px auto;
+	width: 175px;
+}
+
+#bouton-gestion-produit a {
+	color: white;
+}
+
+#table-gestion-produit {
+	margin: 10px auto;
+	    margin-bottom: 170px;
+}
+
+#bouton-modifer-gestion-produit {
+	width: 100px;
+}
+
+.btn_supp_prod {
+	margin: 25px auto;
+	display: table;
+	width: 100px
+}
+
+.categ-select {
+	width: 200px;
+}
+
+/*-------GESTION INGREDIENTS--------- */
+#table-gestion-ingredients {
+	/* 	margin: 10px 50px 50px 50px;
+ */
+	width: 60%;
+	margin: 0 auto;
+	display: block;
+}
+
+#bouton-gestion-ingredients a {
+	color: white;
+}
+
+#bouton-gestion-ingredients {
+	margin: 20px auto 30px auto;
+}
+
+/*--------GESTION COMMANDES------------*/
+#btn-gestionCommande a {
+	color: white;
+}
+
+#btn-gestionCommande {
+	width: 150px;
+	margin: 0 auto;
+	display: grid;
+}
+
+/*-----GESTION ETABLISSEMENT-----------*/
+
+/*-----GESTION UTILISATEUR---------  */
+#tableGestionUtili {
+	width: 90%;
+	margin: 0 auto;
+}
+
+/*------AFFICHAGE COMMANDE--------*/
+#table-affichage-commandes {
+	width: 50%;
+	margin: 50px auto;
+}
+
+/*-----------PAGE CONNECTION------------*/
+#form-connect {
+	margin: 0 auto;
+	display: table;
+}
+
+#erreur {
+	text-align: center;
+	padding: 5%;
+	color: #C35555;
+}
+
+/*----------FOOTER--------------- */
+.footer-bottom {
+	/* 	position:absolute;
+ */
+	background-color: #222;
+	/* min-height: 100%; */
+	width: 100%;
+}
+
+.design {
+	color: #fff;
+	line-height: 30px;
+	min-height: 30px;
+	padding: 7px 0;
+	text-align: right;
+}
+
+.design a {
+	color: rgb(256, 172, 154);
+}
+
+.design a:hover {
+	color: #C35555;
+}
+
+/*Mamie Clafoutis Bottom Footer */
+.footer-bottom {
+	margin-top: 100px;
+	background-color: #222;
+	/* 	min-height: 30px;
+ */
+	width: 100%;
+	margin-top: 90px;
+}
+
+.design {
+	color: #fff;
+	line-height: 30px;
+	min-height: 30px;
+	padding: 7px 0;
+	text-align: right;
+}
+
+.design a {
+	color: rgb(256, 172, 154);
+}
+
+.design a:hover {
+	color: #C35555;
+}
+
+/*-------------Accueil--------------*/
+#img-accueil {
+	position: absolute;
+	z-index: -1;
+}
+
+#titreAccueil {
+	text-align: center;
+}
+
+.infoAccueil {
+	text-align: center;
+}
+
+#logo-mamieclafoutis {
+	display: block;
+	margin: 0 auto;
+	padding: 100px;
+}
+
+/*----------------- modal-----------------*/
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content/Box */
+.modal-content {
+	background-color: #fefefe;
+	margin: 10% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 60%;
+	height: 70%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/*--------------MODAL PRODRUIT----------  */
+
+/* modal*/
+.modal-prod {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content/Box */
+.modal-content-prod {
+	background-color: #fefefe;
+	margin: 10% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 70%;
+	height: 80%;
+}
+
+.modal-prod img {
+	width: 50%;
+}
+
+.modal-prod ul {
+	padding: 0;
+}
+
+/* The Close Button */
+.close-prod {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close-prod:hover, .close-prod:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.img_prod3 {
+	width: 60%;
+	margin: 0 auto;
+	display: block;
+}
+
+.modal-desc-prod {
+	text-align: center;
+	font-size: 20px;
+	margin: 15px;
+}
+
+/*image produit */
+.img_prod {
+	width: 100px;
+	height: 100px;
+}
+
+.titre-modal {
+	text-align: center;
+	margin: 20px;
+}
+
+/*style modal*/
+#titreProfil {
+	text-align: center;
+}
+
+.container-div-ingredient {
+	float: right;
+	bottom: -10%;
+	right: 8%;
+	position: relative;
+	font-size: 23px;
+	border: rgb(256, 172, 154) dotted 2px;
+	padding: 30px;
+}
+
+.info-detail-prod {
+	width: 65%;
+	position: absolute;
+}
+
+.desc-js {
+	font-size: 18px;
+}
+
+.desc-modal-prod {
+	text-align: center;
+	margin-top: 15px;
+}
+
+/*-------table produits panier-------*/
+#tablePanier {
+	table-layout: fixed;
+}
+
+#tablePanier td {
+	width: 20%;
+}
+
+#infoTotalPanier {
+	text-align: right;
+}

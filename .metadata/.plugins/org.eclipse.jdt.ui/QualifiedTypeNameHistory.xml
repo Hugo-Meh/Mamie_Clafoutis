@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="service.C.Adresse"/>
+<fullyQualifiedTypeName name="service.C.Role"/>
+<fullyQualifiedTypeName name="java.sql.Blob"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="manager.SessionManager"/>
+<fullyQualifiedTypeName name="entities.Produit"/>
+<fullyQualifiedTypeName name="entities.ParametresProduit"/>
+<fullyQualifiedTypeName name="service.C.Produit"/>
+<fullyQualifiedTypeName name="manager.CommandeManager"/>
+<fullyQualifiedTypeName name="service.C.Utilisateur"/>
+<fullyQualifiedTypeName name="service.ConnectionBDD"/>
+<fullyQualifiedTypeName name="actions.CommandeAction"/>
+<fullyQualifiedTypeName name="service.C.Etablissement"/>
+<fullyQualifiedTypeName name="service.C.Commande"/>
+<fullyQualifiedTypeName name="entities.Parametre"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="entities.Commande"/>
+<fullyQualifiedTypeName name="actions.LigneDeCommandeAction"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="entities.LigneDeCommande"/>
+</qualifiedTypeNameHistroy>

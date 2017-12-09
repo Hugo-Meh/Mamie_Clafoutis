@@ -1,0 +1,189 @@
+document.addEventListener('DOMContentLoaded', function() {
+	console.log('DOM contruit');
+
+	var validation = document.getElementById("validationCommande");
+
+	var btn = document.getElementsByClassName("btnPanier");
+	var soust = document.getElementsByClassName("soust");
+	var qteprod = document.getElementsByClassName("qteprod");
+	var prixu = document.getElementsByClassName("prixu");
+	
+
+	for (var i = 0; i < soust.length; ++i) {
+
+		console.log(parseFloat(qteprod[i].value)
+				* parseFloat(prixu[i].textContent));
+		soust[i].innerHTML = parseFloat(qteprod[i].value)
+				* parseFloat(prixu[i].textContent);
+
+	}
+
+	for (var i = 0; i < btn.length; ++i) {
+		btn[i].addEventListener('click', ajoutpanier);
+	}
+
+	for (var i = 0; i < qteprod.length; ++i) {
+		qteprod[i].addEventListener('change', changeQte);
+	}
+
+	validation.addEventListener('click', validerpanier);
+
+});
+
+// function valider commande
+function validerpanier(event) {
+	event.preventDefault();
+	console.log("valider commande");
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "gestioncommande", true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+	var param = new Object();
+	param.url = "soumettrecommande";
+
+	var paramtosend = JSON.stringify(param);
+	console.log(paramtosend);
+	xhr.send(paramtosend);
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var jsonString = xhr.responseText;
+			console.log(jsonString);
+
+		}
+
+	}
+}
+
+// function ajouter panier
+function ajoutpanier(event) {
+	// alert(this.id);
+	event.preventDefault();
+	console.log("ajout panier")
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "gestioncommande", true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+	var Produit = new Object();
+	var ParametresProduit = new Object();
+
+	var qte = document.getElementById("quantite" + this.id);
+
+	Produit.id = this.id;
+	Produit.quantite = qte.value;
+
+	console.log(qte.value);
+
+	ParametresProduit.url = "urlAjouterAuPanier";
+	ParametresProduit.produitJsonType = Produit;
+
+	var param = JSON.stringify(ParametresProduit);
+
+	console.log(param);
+
+	xhr.send(param);
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var jsonString = xhr.responseText;
+			console.log(jsonString);
+		
+		}
+
+	}
+
+}
+
+function modifqte() {
+	// alert(this.id);
+
+	console.log("modif")
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "gestioncommande", true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+	var Produit = new Object();
+	var ParametresProduit = new Object();
+
+	var qte = document.getElementById("quantite" + this.id);
+
+	Produit.id = this.id;
+	Produit.quantite = qte.value;
+
+	console.log(qte.value);
+
+	ParametresProduit.url = "urlAjouterAuPanier";
+	ParametresProduit.produitJsonType = Produit;
+
+	var param = JSON.stringify(ParametresProduit);
+
+	console.log(param);
+
+	xhr.send(param);
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var jsonString = xhr.responseText;
+			console.log(jsonString);
+			var obj = JSON.parse(jsonString);
+			console.log(obj);
+			var container= document.getElementById("container_panier");
+//			container.innerHTML="<p>Votre commande a été envoyé " +
+//					"<a href="javascript:history.back()">Page Précédente</a></p>";
+//			if(obj=="commande valide"){
+//				console.log("ok")
+//			}
+
+		}
+
+	}
+
+}
+function changeQte(event) {
+
+	var trLigneProduit = event.target.parentElement.parentElement.parentElement.parentElement;
+	var idProduit = trLigneProduit.id;
+	var qte = event.target.value;
+	var produit = {};
+	produit.id = idProduit;
+	produit.quantite = qte;
+	var ParametresProduit = new Object();
+	ParametresProduit.url = "urlModifierPanier";
+	ParametresProduit.produitJsonType = produit;
+	var param = JSON.stringify(ParametresProduit);
+	console.log(param);
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "gestioncommande", true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+	xhr.send(param);
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var jsonString = xhr.responseText;
+			console.log(jsonString);
+			var obj = JSON.parse(jsonString);
+			if (obj !== undefined) {
+				var tdQte = trLigneProduit
+						.getElementsByClassName("soust");
+				console.log(tdQte);
+				tdQte[0].innerHTML = obj.produitJsonType.prix * obj.produitJsonType.quantite;
+				var recap= document.getElementById("infoTotalPanier");
+				var sousRecaps=recap.children;
+				var valeurFloat=parseFloat(obj.parametreList.valeurParam);
+				console.log(valeurFloat);
+				sousRecaps[0].innerHTML="SOUS-TOTAL: "+(valeurFloat).toFixed(2);
+				sousRecaps[1].innerHTML="SOUS-TOTAL: "+(valeurFloat*0.1).toFixed(2);
+				sousRecaps[2].innerHTML="SOUS-TOTAL: "+(valeurFloat*0.05).toFixed(2);
+				sousRecaps[3].innerHTML="SOUS-TOTAL: "+(valeurFloat*1.15).toFixed(2);
+				
+
+			}
+
+		}
+
+	}
+}
