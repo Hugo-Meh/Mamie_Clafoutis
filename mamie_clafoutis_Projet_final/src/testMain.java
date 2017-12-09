@@ -31,6 +31,6 @@ public class testMain {
 //			System.out.println(gson.toJson(pp));
 //		}
 	Commande c= new Commande(5);
-		ArrayList<LigneDeCommande>lc=LigneDeCommandeAction.displayAllbyCommandeId(c)
+		ArrayList<LigneDeCommande>lc=LigneDeCommandeAction.displayAllbyCommandeId(c);
 	}
 }
